@@ -19,7 +19,7 @@ class Todo(db.Model):
 	title = db.Column(db.String(100), nullable=False)
 	done = db.Column(db.Boolean)
 
-	def __init__(self, title, done)
+	def __init__(self, title, done):
 		self.title = title
 		self.done = done
 
@@ -35,8 +35,35 @@ def home():
 	return "<h1>Todo Flask API</h1>"
 
 # GET
+@app.route("/todos", methods=["GET"])
+def get_todos():
+	all_todos = Todo.query.all()
+	result = todos_schema.dump(all_todos)
+
+	return jsonify(result)
+
 # GET ONE / "Show" route
+@app.route("/todo/<id>", methods=["GET"])
+def get_todo(id):
+	todo = Todo.query.get(id)
+	result = todo_schema.dump(todo)
+
+	return jsonify(result)
+
 # POST
+@app.route("/todo", methods=["POST"])
+def add_todo():
+	title = request.json["title"]
+	done = request.json["done"]
+
+	new_todo = Todo(title, done)
+
+	db.session.add(new_todo)
+	db.session.commit()
+
+	todo = Todo.query.get(new_todo.id)
+	return todo_schema.jsonify(todo)
+
 # DELETE
 # PUT / PATCH
 
