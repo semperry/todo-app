@@ -15,6 +15,19 @@ class App extends Component {
 		}
 	}
 
+	deleteTodo = id => {
+		axios
+			.delete(`https://rec-flask-api.herokuapp.com/todo/${id}`)
+			.then(
+				this.setState({
+					todos: this.state.todos.filter(todo => {
+						return todo.id !== id
+					})
+				})
+			)
+			.catch(err => console.warn("deleteTodo error: ", err))
+	}
+
 	addTodo = e => {
 		e.preventDefault()
 
@@ -41,7 +54,7 @@ class App extends Component {
 	renderTodos = () => {
 		return this.state.todos.map(todo => {
 			return (
-				<TodoItem key={todo.id} todo={todo} />
+				<TodoItem key={todo.id} todo={todo} handleDelete={this.deleteTodo} />
 			)
 		})
 	}
@@ -57,7 +70,6 @@ class App extends Component {
 	}
 
 	render() {
-		console.log(this.state.todos)
 		return (
 			<div className="app">
 				<h1>Todo App</h1>

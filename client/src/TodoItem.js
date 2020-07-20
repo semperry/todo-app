@@ -13,7 +13,7 @@ class TodoItem extends Component {
 	toggleDone = () => {
 		const { done } = this.state
 
-		axios.patch(`https://rec-flask-api.herokuapp.com/todo/${this.props.id}`,
+		axios.patch(`https://rec-flask-api.herokuapp.com/todo/${this.props.todo.id}`,
 			{
 				done: !done
 			}
@@ -27,6 +27,8 @@ class TodoItem extends Component {
 	}
 
 	render() {
+		const { handleDelete, todo } = this.props
+
 		return (
 			<div className="todo-item">
 				<input
@@ -35,9 +37,9 @@ class TodoItem extends Component {
 					defaultChecked={this.state.done}
 				/>
 
-				<p className={this.state.done ? "done" : null}>{this.props.todo.title}</p>
+				<p className={this.state.done ? "done" : null}>{todo.title}</p>
 
-				<button>X</button>
+				<button onClick={() => handleDelete(todo.id)}>X</button>
 			</div>
 		)
 	}
