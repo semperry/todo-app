@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import axios from "axios"
 
 import './styles.css';
+import TodoItem from "./TodoItem"
 
 class App extends Component {
 	constructor() {
@@ -16,9 +17,7 @@ class App extends Component {
 	renderTodos = () => {
 		return this.state.todos.map(todo => {
 			return (
-				<div key={todo.id}>
-					{todo.title}
-				</div>
+				<TodoItem key={todo.id} todo={todo} />
 			)
 		})
 	}
@@ -35,7 +34,7 @@ class App extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className="app">
 				<h1>Todo App</h1>
 				<div />
 
