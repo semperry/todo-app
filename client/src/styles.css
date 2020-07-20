@@ -15,14 +15,27 @@
 	box-shadow: 5px 5px 5px #999;
 }
 
-input, button {
+.add-todo {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	width: 60%;
+	padding-bottom: 15px;
+}
+
+.add-todo input, button {
 	border-radius: 10px;
 	outline: none;
 	border: none;
 }
 
+.add-todo input {
+	padding-left: 5px;
+}
+
 button {
 	margin-left: 5px;
+	cursor: pointer;
 }
 
 .todo-item {
