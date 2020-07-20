@@ -10,8 +10,32 @@ class App extends Component {
 		super()
 
 		this.state = {
+			todo: "",
 			todos: []
 		}
+	}
+
+	addTodo = e => {
+		e.preventDefault()
+
+		axios
+			.post('https://rec-flask-api.herokuapp.com/todo', {
+				title: this.state.todo,
+				done: false
+			})
+			.then(res => {
+				this.setState({
+					todos: [...this.state.todos, res.data],
+					todo: ""
+				})
+			})
+			.catch(err => console.warn("addTodo Error: ", err))
+	}
+
+	handleChange = e => {
+		this.setState({
+			todo: e.target.value
+		})
 	}
 
 	renderTodos = () => {
@@ -33,10 +57,19 @@ class App extends Component {
 	}
 
 	render() {
+		console.log(this.state.todos)
 		return (
 			<div className="app">
 				<h1>Todo App</h1>
-				<div />
+				<form className="add-todo" onSubmit={this.addTodo}>
+					<input
+						type="text"
+						placeholder="Add Todo"
+						onChange={this.handleChange}
+						value={this.state.todo}
+					/>
+					<button type="submit">Add</button>
+				</form>
 
 				{this.renderTodos()}
 			</div>

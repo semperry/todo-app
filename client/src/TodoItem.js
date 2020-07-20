@@ -11,7 +11,19 @@ class TodoItem extends Component {
 	}
 
 	toggleDone = () => {
-		console.log("checked")
+		const { done } = this.state
+
+		axios.patch(`https://rec-flask-api.herokuapp.com/todo/${this.props.id}`,
+			{
+				done: !done
+			}
+		)
+			.then(
+				this.setState({
+					done: !done
+				})
+			)
+			.catch(err => console.warn("toggleDone err ", err))
 	}
 
 	render() {
